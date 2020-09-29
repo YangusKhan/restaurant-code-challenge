@@ -4,8 +4,7 @@
     "baseUrl": "./",
     "outDir": "../build/backend",
     "paths": {
-      "@shared/*": ["src/shared/*"],
-      "@server": ["src/Server"]
+      "@shared/*": ["src/shared/*"]
     }
   },
   "include": ["src/**/*.ts"]

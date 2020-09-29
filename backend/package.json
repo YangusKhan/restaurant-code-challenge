@@ -16,8 +16,7 @@
     "exec": "ts-node -r tsconfig-paths/register ./src"
   },
   "_moduleAliases": {
-    "@shared": "dist/shared",
-    "@server": "dist/Server"
+    "@shared": "dist/shared"
   },
   "dependencies": {
     "command-line-args": "^5.1.1",

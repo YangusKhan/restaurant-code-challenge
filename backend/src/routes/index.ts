@@ -1,7 +1,13 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
+import restaurantRouter from "./restaurant";
 
-// Init router and path
+// Init routers
 const router = Router();
 
-// Export the base-router
+router.get("/", (req: Request, res: Response) => {
+  res.send("You've reached the API endpoint!");
+});
+router.use("/restaurants", restaurantRouter);
+
+// Export the base router
 export default router;

@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "../build/backend",
+    "paths": {
+      "@shared/*": ["src/shared/*"],
+      "@server": ["src/Server"]
+    }
+  },
+  "include": ["src/**/*.ts"]
+}

@@ -3,7 +3,6 @@ import path from "path";
 import express, { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import helmet from "helmet";
 import apiRouter from "./build/backend/routes";
 import logger from "./build/backend/shared/Logger";
 import "express-async-errors";
@@ -20,11 +19,6 @@ app.use(cookieParser());
 // Show routes called in console during development
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
-}
-
-// Security
-if (process.env.NODE_ENV === "production") {
-  app.use(helmet());
 }
 
 /************************************************************************************

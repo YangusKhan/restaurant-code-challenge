@@ -1,0 +1,17 @@
+.filter-container {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #d3d3d3;
+  border-radius: 0.25rem;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.checkbox-container {
+  display: flex;
+  margin-right: 1rem;
+  flex: 1 1 130px;
+}

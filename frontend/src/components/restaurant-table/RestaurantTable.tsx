@@ -175,7 +175,7 @@ export const Filters: React.FC<FilterProps> = function ({
           <option value="WY">Wyoming</option>
         </select>
       </div>
-      <div className="checkbox-group">{checkboxes}</div>
+      <div className="filter-container checkbox-group">{checkboxes}</div>
       <div className="filter-container">
         <label htmlFor="search">Search:</label>
         <input type="text" id="search" name="search" value="" />

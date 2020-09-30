@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc --build tsconfig.prod.json",
+    "build": "tsc --build tsconfig.prod.json && mkdir ../build/backend/data && cp -r ./src/data/** -t ../build/backend/data/",
     "lint": "tslint --project \"tsconfig.json\"",
     "start": "node -r module-alias/register ./dist --env=production",
     "start:dev": "nodemon",

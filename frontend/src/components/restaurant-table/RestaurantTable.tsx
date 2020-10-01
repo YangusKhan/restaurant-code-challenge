@@ -55,6 +55,18 @@ export const Container: React.FC<Props> = function ({ data }) {
       if (activeFilters.state) {
         if (activeFilters.state !== r.state) return false;
       }
+      if (activeFilters.search) {
+        const search = activeFilters.search.toLowerCase();
+        if (
+          !(
+            r.genre.toLowerCase().includes(search) ||
+            r.city.toLowerCase().includes(search) ||
+            r.name.toLowerCase().includes(search)
+          )
+        ) {
+          return false;
+        }
+      }
       return true;
     });
   }, [activeFilters, data]);
@@ -98,7 +110,19 @@ export const Filters: React.FC<FilterProps> = function ({
   genreList,
   updateFilters,
 }) {
-  const onSearch = React.useCallback(() => {}, [updateFilters]);
+  const [searchValue, setSearchValue] = React.useState("");
+  const onSearch = React.useCallback(() => {
+    updateFilters((prevFilters) => {
+      return { ...prevFilters, search: searchValue };
+    });
+  }, [searchValue, updateFilters]);
+  const onSearchChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.persist();
+      setSearchValue(e.target.value);
+    },
+    [setSearchValue]
+  );
 
   const onCheckboxChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -212,7 +236,13 @@ export const Filters: React.FC<FilterProps> = function ({
       <div className="filter-container checkbox-group">{checkboxes}</div>
       <div className="filter-container">
         <label htmlFor="search">Search:</label>
-        <input type="text" id="search" name="search" value="" />
+        <input
+          type="text"
+          id="search"
+          name="search"
+          value={searchValue}
+          onChange={onSearchChange}
+        />
         <input
           type="button"
           id="submitSearch"

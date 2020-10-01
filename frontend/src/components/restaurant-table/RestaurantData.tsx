@@ -15,8 +15,7 @@ export function RestaurantData(props: Props) {
     async function fetchRestaurantData() {
       const raw = await fetch(url);
       const json: { data: RestaurantInfo[] } = JSON.parse(await raw.text());
-      json.data.sort();
-      setData(json.data);
+      setData(json.data.sort());
     }
     fetchRestaurantData();
   }, [url]);

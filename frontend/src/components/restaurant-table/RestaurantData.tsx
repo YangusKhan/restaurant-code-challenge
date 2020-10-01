@@ -14,7 +14,8 @@ export function RestaurantData(props: Props) {
   React.useEffect(() => {
     async function fetchRestaurantData() {
       const raw = await fetch(url);
-      const json = JSON.parse(await raw.text());
+      const json: { data: RestaurantInfo[] } = JSON.parse(await raw.text());
+      json.data.sort();
       setData(json.data);
     }
     fetchRestaurantData();

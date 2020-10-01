@@ -1,29 +1,41 @@
 import React from "react";
 import "./RestaurantTable.css";
 import { RestaurantInfo } from "./shared";
+import {
+  FilterContext,
+  FilterState,
+  DefaultFilters,
+} from "../../context/restaurant-table/filters";
+import {
+  PaginationState,
+  PaginationContext,
+  DefaultPagination,
+} from "../../context/util/pagination";
+import { Pagination } from "../util/Pagination";
 
 export interface Props {
   data: RestaurantInfo[];
 }
 
-export interface FilterState {
-  genre: Set<string>;
-  state: string | undefined;
-  search: string;
-}
-
-export const FilterContext = React.createContext<FilterState>({
-  genre: new Set(),
-  state: undefined,
-  search: "",
-});
-
 export const Container: React.FC<Props> = function ({ data }) {
-  const [activeFilters, setFilters] = React.useState<FilterState>({
-    genre: new Set(),
-    state: undefined,
-    search: "",
-  });
+  const [activeFilters, setFilters] = React.useState<FilterState>(
+    DefaultFilters
+  );
+
+  const [pagination, setPagination] = React.useState<PaginationState>(
+    DefaultPagination
+  );
+
+  const onPageChange = React.useCallback(
+    (offset: number) => {
+      return function () {
+        setPagination((prev) => {
+          return { ...prev, currentPage: prev.currentPage + offset };
+        });
+      };
+    },
+    [setPagination]
+  );
 
   const genreList = React.useMemo(() => {
     return data.reduce<Set<string>>((acc, cur) => {
@@ -34,24 +46,46 @@ export const Container: React.FC<Props> = function ({ data }) {
     }, new Set());
   }, [data]);
 
+  const filteredData = React.useMemo(() => {
+    return data.filter((r) => {
+      if (activeFilters.genre.size) {
+        const genreList = r.genre.split(",");
+        if (!genreList.some((g) => activeFilters.genre.has(g))) return false;
+      }
+      if (activeFilters.state) {
+        if (activeFilters.state !== r.state) return false;
+      }
+      return true;
+    });
+  }, [activeFilters, data]);
+
+  const paginatedData = React.useMemo(() => {
+    const offset = (pagination.currentPage - 1) * pagination.itemsPerPage;
+    return filteredData.slice(offset, offset + pagination.itemsPerPage);
+  }, [filteredData, pagination]);
+
   return (
-    <FilterContext.Provider value={activeFilters}>
-      <div className="restaurant-container">
+    <div className="restaurant-container">
+      <FilterContext.Provider value={activeFilters}>
         <Filters genreList={genreList} updateFilters={setFilters} />
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>City</th>
-              <th>State</th>
-              <th>Phone</th>
-              <th>Genre</th>
-            </tr>
-          </thead>
-          <Body data={data} />
-        </table>
-      </div>
-    </FilterContext.Provider>
+        <PaginationContext.Provider value={pagination}>
+          <Pagination data={filteredData} onPageChange={onPageChange}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Phone</th>
+                  <th>Genre</th>
+                </tr>
+              </thead>
+              <Body data={paginatedData} />
+            </table>
+          </Pagination>
+        </PaginationContext.Provider>
+      </FilterContext.Provider>
+    </div>
   );
 };
 
@@ -196,10 +230,9 @@ export interface BodyProps {
 }
 
 export const Body: React.FC<BodyProps> = function ({ data }) {
-  const { genre, state } = React.useContext(FilterContext);
   const rows = React.useMemo(() => {
     return data.map((r) => <Row key={r.id} data={r} />);
-  }, [genre, state, data]);
+  }, [data]);
 
   return <tbody>{rows}</tbody>;
 };

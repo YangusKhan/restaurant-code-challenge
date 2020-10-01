@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node index.ts",
-    "prebuild": "rm -rf ./build",
-    "build:backend": "cd backend && yarn build && cd ../",
-    "build:frontend": "cd frontend && yarn build && cd ../",
+    "prebuild:frontend": "rm -rf ./build/frontend",
+    "build:backend": "cd backend && yarn build",
+    "prebuild:backend": "rm -rf ./build/backend",
+    "build:frontend": "cd frontend && yarn build",
     "build": "npm-run-all build:backend build:frontend"
   },
   "dependencies": {

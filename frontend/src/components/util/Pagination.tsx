@@ -1,5 +1,6 @@
 import React from "react";
 import { PaginationContext } from "../../context/util/pagination";
+import "./Pagination.css";
 
 interface Props<D> {
   onPageChange: (offset: number) => () => void;

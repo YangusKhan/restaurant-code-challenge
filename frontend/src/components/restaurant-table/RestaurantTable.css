@@ -13,5 +13,10 @@
 .checkbox-container {
   display: flex;
   margin-right: 1rem;
-  flex: 1 1 130px;
+  flex: 0 1 130px;
+}
+
+.restaurant-table {
+  margin: 1rem auto 0;
+  border-spacing: 0.25rem;
 }

@@ -82,7 +82,7 @@ export const Container: React.FC<Props> = function ({ data }) {
         <Filters genreList={genreList} updateFilters={setFilters} />
         <PaginationContext.Provider value={pagination}>
           <Pagination data={filteredData} onPageChange={onPageChange}>
-            <table>
+            <table className="restuarant-table">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -160,13 +160,13 @@ export const Filters: React.FC<FilterProps> = function ({
       const id = `genre-${g}`;
       return (
         <div className="checkbox-container">
-          <label htmlFor={id}>{g}</label>
           <input
             type="checkbox"
             id={id}
             value={g}
             onChange={onCheckboxChange}
           />
+          <label htmlFor={id}>{g}</label>
         </div>
       );
     });

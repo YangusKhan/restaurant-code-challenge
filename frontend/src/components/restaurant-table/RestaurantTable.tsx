@@ -82,7 +82,7 @@ export const Container: React.FC<Props> = function ({ data }) {
         <Filters genreList={genreList} updateFilters={setFilters} />
         <PaginationContext.Provider value={pagination}>
           <Pagination data={filteredData} onPageChange={onPageChange}>
-            <table className="restuarant-table">
+            <table className="restaurant-table">
               <thead>
                 <tr>
                   <th>Name</th>

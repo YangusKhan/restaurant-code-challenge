@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript).
 
+This repository is a monorepo that uses `lerna` with `yarn` workspaces to install dependencies and run scripts. `lerna` is saved as a devDependency in the root `package.json`.
+
 ## Available Scripts
 
 In the project directory, you can run:

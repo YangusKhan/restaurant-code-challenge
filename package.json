@@ -8,6 +8,7 @@
     "backend"
   ],
   "scripts": {
+    "postinstall": "yarn build",
     "bootstrap": "lerna bootstrap",
     "start": "ts-node index.ts",
     "prebuild:frontend": "rm -rf ./build/frontend",
